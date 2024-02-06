@@ -1,32 +1,38 @@
-import { Text, View, TextInput, KeyboardAvoidingView, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { Text, View, TextInput, KeyboardAvoidingView, StyleSheet, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 
-function LoginScreen({ navigation }) {
+function LoginScreen({ navigation }) 
+{
     const [token, setToken] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
 
-    function navigateToHelp()
+    function navigateToHelp() 
     {
         navigation.navigate({ name: 'help' });
         return;
     }
 
-        function navigateToHome()
-        {
-            navigation.replace('accueil')
-        }
+    function navigateToHome() 
+    {
+        navigation.replace('accueil')
+    }
 
-    async function handleLogin() {
+    async function handleLogin() 
+    {
+        let newToken = token;
+
         setErrorMessage('');
         if (token.length === 0) {
             setErrorMessage('Aucun token n\'a été indiqué');
             return;
         }
+        newToken = newToken.replace('"', '');
+        newToken = newToken.replace('"', '');
         try {
             const response = await fetch('https://api.epitest.eu/me/2023', {
                 method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${newToken}`,
                     'content-type': 'application/json'
                 },
             });
